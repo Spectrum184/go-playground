@@ -1,9 +1,9 @@
-package main
+package worker
 
 import "fmt"
 
 func main()  {
-	number := 100
+	number := 10
 	numberOfWorker := 5
 	jobs := make(chan int, number)
 
