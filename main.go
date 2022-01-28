@@ -1,32 +1,22 @@
 package main
 
-import (
-	"fmt"
-	"playground/factory"
-)
+import c "playground/chain"
 
 func main(){
-	adidasFactory := factory.GetSportFactory("adidas")
-	adidasShoe := adidasFactory.MakeShoe()
-	adidasSock := adidasFactory.MakeSock()
+	cashier := &c.Cashier{}
 
-	printShoe(adidasShoe)
-	printSock(adidasSock)
+	medical := &c.Medical{}
+	medical.SetNext(cashier)
 
-	nikeFactory := factory.GetSportFactory("nike")
-	nikeShoe := nikeFactory.MakeShoe()
-	nikeSock := nikeFactory.MakeSock()
+	doctor := &c.Doctor{}
+	doctor.SetNext(medical)
 
-	printShoe(nikeShoe)
-	printSock(nikeSock)
+	reception := &c.Reception{}
+	reception.SetNext(doctor)
+
+	patient := &c.Patient{Name: "Thanh"}
+
+	reception.Execute(patient)
+
 }
 
-func printShoe(s factory.IShoe)  {
-	fmt.Printf("Logo: %s\n", s.GetLogo())
-	fmt.Printf("Size: %d\n", s.GetSize())
-}
-
-func printSock(s factory.ISock){
-	fmt.Printf("Logo: %s\n", s.GetLogo())
-	fmt.Printf("Size: %d\n", s.GetSize())
-}
