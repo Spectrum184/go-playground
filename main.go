@@ -1,22 +1,17 @@
 package main
 
-import c "playground/chain"
+import o "playground/observer"
 
 func main(){
-	cashier := &c.Cashier{}
+	shirtItem := o.NewItem("Nike shirt")
+	observerFirst := &o.Customer{ID: "abc@gmail.com"}
+	observerSecond := &o.Customer{ID: "xyz@hotmail.com"}
 
-	medical := &c.Medical{}
-	medical.SetNext(cashier)
+	shirtItem.Register(observerFirst)
+	shirtItem.Register(observerSecond)
+	shirtItem.DeRegister(observerSecond)
 
-	doctor := &c.Doctor{}
-	doctor.SetNext(medical)
-
-	reception := &c.Reception{}
-	reception.SetNext(doctor)
-
-	patient := &c.Patient{Name: "Thanh"}
-
-	reception.Execute(patient)
+	shirtItem.UpdateAvailability()
 
 }
 
