@@ -1,17 +1,21 @@
 package main
 
-import o "playground/observer"
+import s "playground/strategy"
 
 func main(){
-	shirtItem := o.NewItem("Nike shirt")
-	observerFirst := &o.Customer{ID: "abc@gmail.com"}
-	observerSecond := &o.Customer{ID: "xyz@hotmail.com"}
+	lfu := &s.LFU{}
+	cache := s.InitCache(lfu)
 
-	shirtItem.Register(observerFirst)
-	shirtItem.Register(observerSecond)
-	shirtItem.DeRegister(observerSecond)
+	cache.Add("a", "1")
+	cache.Add("b", "2")
+	cache.Add("c", "3")
 
-	shirtItem.UpdateAvailability()
+	lru := &s.LRU{}
+	cache.SetEvictionAlgo(lru)
+	cache.Add("d", "4")
 
+	fifo  := &s.FIFO{}
+	cache.SetEvictionAlgo(fifo)
+	cache.Add("2","5")
 }
 
