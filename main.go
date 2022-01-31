@@ -1,21 +1,23 @@
 package main
 
-import s "playground/strategy"
+import b "playground/bridge"
 
 func main(){
-	lfu := &s.LFU{}
-	cache := s.InitCache(lfu)
+	hpPrinter := &b.HP{}
+	epsonPrinter := &b.Epson{}
 
-	cache.Add("a", "1")
-	cache.Add("b", "2")
-	cache.Add("c", "3")
+	macComputer := &b.Mac{}
+	macComputer.SetPrinter(hpPrinter)
+	macComputer.Print()
 
-	lru := &s.LRU{}
-	cache.SetEvictionAlgo(lru)
-	cache.Add("d", "4")
+	macComputer.SetPrinter(epsonPrinter)
+	macComputer.Print()
 
-	fifo  := &s.FIFO{}
-	cache.SetEvictionAlgo(fifo)
-	cache.Add("2","5")
+	windowComputer := &b.Window{}
+	windowComputer.SetPrinter(hpPrinter)
+	windowComputer.Print()
+
+	windowComputer.SetPrinter(epsonPrinter)
+	windowComputer.Print()
 }
 
