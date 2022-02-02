@@ -1,23 +1,28 @@
 package main
 
-import b "playground/bridge"
+import (
+	"fmt"
+	p "playground/proxy"
+)
 
 func main(){
-	hpPrinter := &b.HP{}
-	epsonPrinter := &b.Epson{}
+	nginxServer := p.NewNginxServer()
+	appStatusURL := "app/status"
+	createUserURL := "create/user"
 
-	macComputer := &b.Mac{}
-	macComputer.SetPrinter(hpPrinter)
-	macComputer.Print()
-
-	macComputer.SetPrinter(epsonPrinter)
-	macComputer.Print()
-
-	windowComputer := &b.Window{}
-	windowComputer.SetPrinter(hpPrinter)
-	windowComputer.Print()
-
-	windowComputer.SetPrinter(epsonPrinter)
-	windowComputer.Print()
+	httpCode, message := nginxServer.HandleRequest(appStatusURL, "GET")
+	fmt.Printf("\nURL: %s\nHttpCode:%d\nMessage: %s\n", appStatusURL, httpCode, message)
+	httpCode, message = nginxServer.HandleRequest(appStatusURL, "GET")
+	fmt.Printf("\nURL: %s\nHttpCode:%d\nMessage: %s\n", appStatusURL, httpCode, message)
+	httpCode, message = nginxServer.HandleRequest(appStatusURL, "GET")
+	fmt.Printf("\nURL: %s\nHttpCode:%d\nMessage: %s\n", appStatusURL, httpCode, message)
+	
+	httpCode, message = nginxServer.HandleRequest(createUserURL, "POST")
+	fmt.Printf("\nURL: %s\nHttpCode:%d\nMessage: %s\n", appStatusURL, httpCode, message)
+	httpCode, message = nginxServer.HandleRequest(createUserURL, "POST")
+	fmt.Printf("\nURL: %s\nHttpCode:%d\nMessage: %s\n", appStatusURL, httpCode, message)
+	
+	httpCode, message = nginxServer.HandleRequest(createUserURL, "GET")
+	fmt.Printf("\nURL: %s\nHttpCode:%d\nMessage: %s\n", appStatusURL, httpCode, message)
 }
 
